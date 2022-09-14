@@ -1,4 +1,7 @@
 # Project 1
+# Here we extract our data out of the CSV to get X and y (for regression
+# and classification, respectively) and also N, M and C.
+#%%
 
 import numpy as np
 import pandas as pd
@@ -20,8 +23,7 @@ X = raw_data[:, cols]
 
 # Extract attribute names of header
 attributeNames = np.asarray(df.columns[cols])
-
-## Transform string features into numbers
+#%% Transform string features into numbers
 
 # family_history_with_overweight
 column = 4
@@ -89,18 +91,41 @@ MTRANS_encoding = np.zeros((MTRANS_num.size, K))
 MTRANS_encoding[np.arange(MTRANS_num.size), MTRANS_num] = 1
 X = np.concatenate( (X[:, :-2], MTRANS_encoding), axis=1)
 #update attributesNames
-attributeNames = np.concatenate((attributeNames[0:-2],["Automobile","Bike","Motorbike","Public_Transportation","Walking"]), axis=0)
+attributeNames = np.concatenate((attributeNames[0:-2],["Automobile","Bike","Motorbike",\
+                                                       "Public_Transportation","Walking"]), axis=0)
 
-#targetName_r = attributeNames_c[2]
-#attributeNames_r = np.concatenate((attributeNames_c[[0, 1, 3]], classNames), axis=0)
+#%% get Y data, transform Y data for classification and finalize attributesName
+# get Y data
 
-
-# get Y data and delete Y data from X
 y_regression = raw_data[:,3]
 y_classification = raw_data[:,16]
+
+# One-Ouf-Off K coding for y_classification (NObeyesdad)
+column = 16
+classLabels = raw_data[:,column]
+classNames = np.unique(classLabels)
+classDict = dict({'Insufficient_Weight': 0 ,'Normal_Weight': 1,'Overweight_Level_I': 2, \
+                  'Overweight_Level_II': 3, 'Obesity_Type_I': 4, 'Obesity_Type_II': 5, \
+                      'Obesity_Type_III': 6})
+Obesity_num = np.array([classDict[cl] for cl in classLabels])
+# One out off K coding
+K = Obesity_num.max()+1
+Obesity_encoding = np.zeros((Obesity_num.size, K))
+Obesity_encoding[np.arange(Obesity_num.size), Obesity_num] = 1
+y_classification = Obesity_encoding
+attributesNames_classification = np.array(['Insufficient_Weight','Normal_Weight','Overweight_Level_I', \
+                  'Overweight_Level_II', 'Obesity_Type_I', 'Obesity_Type_II', \
+                      'Obesity_Type_III'])
+
+#delete weight in X and attributeNames (NObeyesdad already got deleted)
 X = np.delete(X, [4], 1)
-# delete attributeNames of Y-columns
 attributeNames = np.delete(attributeNames, [4], 0)
+
+#get number of observations N and number of features M
+N, M = X.shape
+
+#get number of classes for classification
+C = len(attributesNames_classification)
 
 
 
