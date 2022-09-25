@@ -12,7 +12,7 @@ In order to correctly run the scripts:
 
 ## Dataset description
 
-Used dataset concerns the problem of obesity in the countries of Mexico, Peru and Colombia. Comprehensive description on how the data was gathered can be found [here](https://archive.ics.uci.edu/ml/machine-learning-databases/00544/). 
+Used dataset concerns the problem of obesity in the countries of Mexico, Peru and Colombia. Comprehensive description on how the data was gathered can be found [here](https://www.sciencedirect.com/science/article/pii/S2352340919306985/). 
 
 ## Authors
 - Lukas Stjernen
