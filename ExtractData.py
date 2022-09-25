@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 
 # Load the Project csv data using the Pandas library
-filename = 'C:/Users/max44/anaconda3/02450Toolbox_Python/Data/ProjectData.csv'
+filename = './data/ObesityDataSet_raw_and_data_sinthetic.csv'
 df = pd.read_csv(filename)
 
 # Regression or Classification
