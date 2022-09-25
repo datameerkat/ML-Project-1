@@ -6,7 +6,8 @@
 ## How-to
 
 In order to correctly run the scripts:
-* download the dataset from [link](https://archive.ics.uci.edu/ml/machine-learning-databases/00544/)
+* download the dataset from [link](https://archive.ics.uci.edu/ml/machine-learning-databases/00544/),
+* create folder *data* in the root directory,
 * unzip and move the *ObesityDataSet_raw_and_data_sinthetic.csv* file to the *data* folder. 
 
 ## Dataset description
