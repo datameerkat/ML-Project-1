@@ -6,8 +6,24 @@ from ExtractData import *
 import scipy.linalg as linalg
 import matplotlib.pyplot as plt
 
+# convertion of array of objects to array of floats
 Xf = X.astype(float)
 N,M = Xf.shape
+
+# =============================================================================
+# =============================================================================
+# !CAUTION!
+# plots each pair of the attributes
+# better leave commented
+# =============================================================================
+# =============================================================================
+
+# for i in range(0,M):
+#     for j in range(0,M):
+#         plt.plot(Xf[:, i], Xf[:, j], 'o', alpha=0.1)
+#         plt.xlabel(attributeNames[i])
+#         plt.ylabel(attributeNames[j])
+#         plt.show()
 
 # =============================================================================
 # =============================================================================
@@ -26,13 +42,21 @@ rho = (S*S) / (S*S).sum()
 threshold = 0.9
 
 plt.figure()
-plt.plot(range(1,len(rho)+1),rho,'x-')
+plt.plot(range(1,len(rho)+1),rho,'o-')
+plt.title('Variance explained by principal components');
+plt.xlabel('Principal component');
+plt.ylabel('Variance explained');
+plt.legend(['Individual'])
+plt.grid()
+plt.show()
+
+plt.figure()
 plt.plot(range(1,len(rho)+1),np.cumsum(rho),'o-')
 plt.plot([1,len(rho)],[threshold, threshold],'k--')
 plt.title('Variance explained by principal components');
 plt.xlabel('Principal component');
 plt.ylabel('Variance explained');
-plt.legend(['Individual','Cumulative','Threshold'])
+plt.legend(['Cumulative','Threshold'])
 plt.grid()
 plt.show()
 
@@ -57,7 +81,7 @@ for pcs_triple in pcs:
     plt.ylabel('Component coefficients')
     plt.legend(legendStrs)
     plt.grid()
-    plt.title('Obesity: PCA Component Coefficients')
+    plt.title('PCA Component Coefficients')
     plt.show()
 
 # =============================================================================
