@@ -93,13 +93,21 @@ for pcs_triple in pcs:
 V = V.T
 Z = Xf @ V
 
-# component choice
-i = 0
-j = 1
+pairs = [[0,1],[1,2],[0,2]]
+for pair in pairs:
+    f = plt.figure()
+    plt.title('PCA')
+    # for c in range(0,C-1,2):
+    for c in range(0,C):
+        print(c)
+        # class1_mask = y_classification[:,c]==1
+        # class2_mask = y_classification[:,c+1]==1
+        # class_mask = class1_mask | class2_mask
+        class_mask = y_classification[:,c]==1
+        plt.plot(Z[class_mask,pair[0]], Z[class_mask,pair[1]], 'o', alpha=.5)
+    plt.xlabel('PC{0}'.format(pair[0]+1))
+    plt.ylabel('PC{0}'.format(pair[1]+1))
+    plt.legend(['Normal', 'Mid', "High"])
+    plt.legend(classNames)
+    plt.show()
 
-f = plt.figure()
-plt.title('Obesity data: PCA')
-plt.plot(Z[:,i], Z[:,j], 'o', alpha=.5)
-plt.xlabel('PC{0}'.format(i+1))
-plt.ylabel('PC{0}'.format(j+1))
-plt.show()
