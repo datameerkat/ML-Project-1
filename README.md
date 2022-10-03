@@ -15,6 +15,6 @@ In order to correctly run the scripts:
 Used dataset concerns the problem of obesity in the countries of Mexico, Peru and Colombia. Comprehensive description on how the data was gathered can be found [here](https://www.sciencedirect.com/science/article/pii/S2352340919306985/). 
 
 ## Authors
-- Lukas Stjernen
+- [Lukas Stjernen](https://github.com/Lukas-Stjernen)
 - [Maciek Salwowski](https://github.com/MSalwowski)
 - [Max Klein](https://github.com/datameerkat)
