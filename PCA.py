@@ -62,7 +62,7 @@ plt.show()
 
 # =============================================================================
 # =============================================================================
-# the ammount of variation explained as the number of PCA components included
+# the amount of variation explained as the number of PCA components included
 # =============================================================================
 # =============================================================================
 
@@ -93,13 +93,32 @@ for pcs_triple in pcs:
 V = V.T
 Z = Xf @ V
 
-# component choice
-i = 0
-j = 1
+# choice of principal components
+i = 1
+j = 2
 
 f = plt.figure()
-plt.title('Obesity data: PCA')
-plt.plot(Z[:,i], Z[:,j], 'o', alpha=.5)
+plt.title('Data projected into PCs (6-classification)')
+for c in range(0,C):
+    class_mask = y_classification[:,c]==1
+    plt.plot(Z[class_mask,i], Z[class_mask,j], 'o', alpha=.5)
 plt.xlabel('PC{0}'.format(i+1))
 plt.ylabel('PC{0}'.format(j+1))
+plt.legend(classNames)
+plt.show()
+
+f = plt.figure()
+plt.title('Data projected into PCs (3-classification)')
+for c in range(0,C-1,2):
+    print(c)
+    class1_mask = y_classification[:,c]==1
+    class2_mask = y_classification[:,c+1]==1
+    class_mask = class1_mask | class2_mask
+    if c == 4:
+        class3_mask = y_classification[:,c+2]==1
+        class_mask = class_mask | class3_mask
+    plt.plot(Z[class_mask,i], Z[class_mask,j], 'o', alpha=.5)
+plt.xlabel('PC{0}'.format(i+1))
+plt.ylabel('PC{0}'.format(j+1))
+plt.legend(['Insufficient/Normal_Weight', 'Obesities', "Overweights"])
 plt.show()
