@@ -1,7 +1,3 @@
-"""
-In order to obtain correct plots comment out the classification section in ExtractData.py
-"""
-
 from ExtractData import *
 import scipy.linalg as linalg
 import matplotlib.pyplot as plt
