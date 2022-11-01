@@ -2,19 +2,19 @@
 # Here we extract our data out of the CSV to get X and y (for regression
 # and classification, respectively) and also N, M and C.
 #%%
-
 import numpy as np
 import pandas as pd
 
 # Load the Project csv data using the Pandas library
-filename = './data/ObesityDataSet_raw_and_data_sinthetic.csv'
+filename = 'C:/Users/max44/anaconda3/02450Toolbox_Python/Data/ProjectData.csv'
 df = pd.read_csv(filename)
 
 # Regression or Classification
 task = "Regression"
 
 # Convert to numpy array
-raw_data = df.values  
+#raw_data = df.values 
+raw_data = df.to_numpy()
 
 # Create X
 cols = range(0, len(df.columns)) 
@@ -121,11 +121,18 @@ attributesNames_classification = np.array(['Insufficient_Weight','Normal_Weight'
 X = np.delete(X, [4], 1)
 attributeNames = np.delete(attributeNames, [4], 0)
 
+#Python objects into float
+X = np.array(X, dtype=float)
+y_regression = np.array(y_regression, dtype=float)
+
+
 #get number of observations N and number of features M
 N, M = X.shape
 
 #get number of classes for classification
 C = len(attributesNames_classification)
+
+print("Ran ExtractData")
 
 
 
