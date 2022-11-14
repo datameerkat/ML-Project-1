@@ -157,8 +157,8 @@ for train_index, test_index in CV1.split(X,y):
 
 # === STATISTICAL EVALUATION ===
 alpha = 0.05
-[ANN_baseline_theta, ANN_baseline_CI, ANN_baseline_p] = mcnemar(y_classification, ANN_y_hat, BL_y_hat, alpha=alpha)
-[MR_baseline_theta, MR_baseline_CI, MR_baseline_p] = mcnemar(y_classification, MR_y_hat, BL_y_hat, alpha=alpha)
+[ANN_BL_theta, ANN_BL_CI, ANN_BL_p] = mcnemar(y_classification, ANN_y_hat, BL_y_hat, alpha=alpha)
+[MR_BL_theta, MR_BL_CI, MR_BL_p] = mcnemar(y_classification, MR_y_hat, BL_y_hat, alpha=alpha)
 [ANN_MR_theta, ANN_MR_CI, ANN_MR_p] = mcnemar(y_classification, ANN_y_hat, MR_y_hat, alpha=alpha)
 # =========
 
@@ -193,15 +193,15 @@ print("====== MCNEMAR'S TESTS ======")
 print()
 
 print("=== ANN vs BL ===")
-print("theta: ", ANN_baseline_theta)
-print("CI: ", ANN_baseline_CI)
-print("p-value: ", ANN_baseline_p)
+print("theta: ", ANN_BL_theta)
+print("CI: ", ANN_BL_CI)
+print("p-value: ", ANN_BL_p)
 print("=========")
 
 print("=== MR vs BL ===")
-print("theta: ", MR_baseline_theta)
-print("CI: ", MR_baseline_CI)
-print("p-value: ", MR_baseline_p)
+print("theta: ", MR_BL_theta)
+print("CI: ", MR_BL_CI)
+print("p-value: ", MR_BL_p)
 print("=========")
 
 print("=== ANN vs MR ===")
