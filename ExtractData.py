@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 # Load the Project csv data using the Pandas library
-filename = 'C:/Users/max44/anaconda3/02450Toolbox_Python/Data/ProjectData.csv'
+filename = './data/ObesityDataSet_raw_and_data_sinthetic.csv'
 df = pd.read_csv(filename)
 
 # Regression or Classification
@@ -107,15 +107,7 @@ classNames = np.unique(classLabels)
 classDict = dict({'Insufficient_Weight': 0 ,'Normal_Weight': 1,'Overweight_Level_I': 2, \
                   'Overweight_Level_II': 3, 'Obesity_Type_I': 4, 'Obesity_Type_II': 5, \
                       'Obesity_Type_III': 6})
-Obesity_num = np.array([classDict[cl] for cl in classLabels])
-# One out off K coding
-K = Obesity_num.max()+1
-Obesity_encoding = np.zeros((Obesity_num.size, K))
-Obesity_encoding[np.arange(Obesity_num.size), Obesity_num] = 1
-y_classification = Obesity_encoding
-attributesNames_classification = np.array(['Insufficient_Weight','Normal_Weight','Overweight_Level_I', \
-                  'Overweight_Level_II', 'Obesity_Type_I', 'Obesity_Type_II', \
-                      'Obesity_Type_III'])
+y_classification = np.array([classDict[cl] for cl in classLabels])
 
 #delete weight in X and attributeNames (NObeyesdad already got deleted)
 X = np.delete(X, [4], 1)
@@ -130,7 +122,7 @@ y_regression = np.array(y_regression, dtype=float)
 N, M = X.shape
 
 #get number of classes for classification
-C = len(attributesNames_classification)
+C = len(classDict)
 
 print("Ran ExtractData")
 
