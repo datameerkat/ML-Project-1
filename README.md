@@ -1,7 +1,10 @@
-# Project 1 - *Data: Feature extraction and visualization*
 ## Project goal
 
-*Introduction To Machine Learning and Data Mining* course project concerning the principles of data analysis. For the given dataset the proccess of data description, feature extraction and PCA analysis has been conducted. Conducted analysis can be found in file *Report.pdf*.
+*Introduction To Machine Learning and Data Mining* course project concerning the principles of data analysis. The project has been divided into two parts with titles:
+ - Data: Feature extraction and visualization,
+ - Supervised learning: Classification and regression.
+ 
+For the given dataset the proccesses of data description, PCA analysis, regression and classification have been conducted. Descriptive analysis can be found in files *Report1.pdf* and *Report2.pdf*.
 
 ## How-to
 
