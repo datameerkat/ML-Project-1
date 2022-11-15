@@ -26,7 +26,7 @@ import time
 def ComputeBaselinePredictions(classes):
     counts = np.bincount(classes)
     mode = np.argmax(counts)
-    return classes != mode
+    return np.full(len(classes), mode)
 
 start = time.time()
 y = y_classification
@@ -55,6 +55,7 @@ BL_test_errors = np.zeros(K1)
 ANN_y_hat = []
 MR_y_hat = []
 BL_y_hat = []
+y_real = []
 # =========
 
 i = 0
@@ -153,14 +154,17 @@ for train_index, test_index in CV1.split(X,y):
     BL_test_errors[i] = errors_ratio
     # =========
     
+    y_real.extend(y_test)
+    
     i+=1
 
-# === STATISTICAL EVALUATION ===
+# # === STATISTICAL EVALUATION ===
+y_real = np.array(y_real)
 alpha = 0.05
-[ANN_BL_theta, ANN_BL_CI, ANN_BL_p] = mcnemar(y_classification, ANN_y_hat, BL_y_hat, alpha=alpha)
-[MR_BL_theta, MR_BL_CI, MR_BL_p] = mcnemar(y_classification, MR_y_hat, BL_y_hat, alpha=alpha)
-[ANN_MR_theta, ANN_MR_CI, ANN_MR_p] = mcnemar(y_classification, ANN_y_hat, MR_y_hat, alpha=alpha)
-# =========
+[ANN_BL_theta, ANN_BL_CI, ANN_BL_p] = mcnemar(y_real, ANN_y_hat, BL_y_hat, alpha=alpha)
+[MR_BL_theta, MR_BL_CI, MR_BL_p] = mcnemar(y_real, MR_y_hat, BL_y_hat, alpha=alpha)
+[ANN_MR_theta, ANN_MR_CI, ANN_MR_p] = mcnemar(y_real, ANN_y_hat, MR_y_hat, alpha=alpha)
+# # =========
 
 end = time.time()
 elapsed_time = end - start
