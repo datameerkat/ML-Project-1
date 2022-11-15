@@ -35,7 +35,7 @@ CV = model_selection.KFold(K, shuffle=True)
 lambdas = np.power(10.,range(-5,5))
 #Number of hidden layers - must be length = K!
 #hlayer = np.arange(1,21,2)
-hlayer = np.arange(1,11,1)
+hlayer = np.arange(1,21,2)
 max_iter = 10000
 n_replicates = 1
 
@@ -102,6 +102,8 @@ for train_index, test_index in CV.split(X,y):
                             torch.nn.ReLU(),   # 1st transfer function,
                             torch.nn.Linear(hlayer[k], hlayer[k]), #1. hidden layer
                             torch.nn.ReLU(),   # 2st transfer function,
+                            torch.nn.Linear(hlayer[k], hlayer[k]), #1. hidden layer
+                            torch.nn.ReLU(),   # 2st transfer function,
                             torch.nn.Linear(hlayer[k], 1), # 2. hidden layer: n_hidden_units to 1 output neuron
                             # no final tranfer function, i.e. "linear output"
                             )
@@ -124,11 +126,39 @@ for train_index, test_index in CV.split(X,y):
         l+=1
     #find best ANN for this outer fold
     opt_nodes = np.argmin(Error_test_ANN[k,:], axis=0)
-    
+    #train best ANN with entire training set
+    X_train_ANN = torch.Tensor(X[train_index,:])
+    y_train_ANN = torch.Tensor(np.asmatrix(y[train_index]).T)
+    X_test_ANN = torch.Tensor(X[test_index,:])
+    y_test_ANN = torch.Tensor(np.asmatrix(y[test_index]).T)
+    model = lambda: torch.nn.Sequential(
+                        torch.nn.Linear(M, hlayer[opt_nodes]), #M features to n_hidden_units
+                        torch.nn.ReLU(),   # 1st transfer function,
+                        torch.nn.Linear(hlayer[opt_nodes], hlayer[opt_nodes]), #1. hidden layer
+                        torch.nn.ReLU(),   # 2st transfer function,
+                        torch.nn.Linear(hlayer[opt_nodes], hlayer[opt_nodes]), #1. hidden layer
+                        torch.nn.ReLU(),   # 2st transfer function,
+                        torch.nn.Linear(hlayer[opt_nodes], 1), # 2. hidden layer: n_hidden_units to 1 output neuron
+                        # no final tranfer function, i.e. "linear output"
+                        )
+    loss_fn = torch.nn.MSELoss() # notice how this is now a mean-squared-error loss
+    # Train the net on training data
+    net, final_loss, learning_curve = train_neural_net(model,
+                                                       loss_fn,
+                                                       X=X_train_ANN,
+                                                       y=y_train_ANN,
+                                                       n_replicates=n_replicates,
+                                                       max_iter=max_iter)
+    # Determine estimated class labels for test set
+    y_test_est_ANN = net(X_test_ANN)
+    # Determine errors and errors
+    se = (y_test_est_ANN.float()-y_test_ANN.float())**2 # squared error
+    mse = (sum(se).type(torch.float)/len(y_test_ANN)).data.numpy() #mean
+    #Error_test_ANN[k,l] = mse
     #update comparison table
     comparison[k-1,0] = k
     comparison[k-1,1] = hlayer[opt_nodes]
-    comparison[k-1,2] = Error_test_ANN[k,opt_nodes]
+    comparison[k-1,2] = mse
     comparison[k-1,3] = opt_lambda
     comparison[k-1,4] = Error_test_rlr[k]
     comparison[k-1,5] = Error_test_base[k]
